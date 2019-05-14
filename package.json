@@ -11,10 +11,19 @@
     "devDependencies": {
         "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
         "@polymer/test-fixture": "^4.0.2",
+        "@types/chai": "^4.1.7",
+        "@types/mocha": "^5.2.6",
         "@webcomponents/webcomponentsjs": "^2.0.0",
         "chai": "^4.2.0",
         "mocha": "^5.2.0",
+        "polymer-template-injector": "^1.0.0",
+        "ptypescript": "^0.1.0",
+        "tslint": "^5.9.1",
+        "typescript": "^3.4.5",
         "wct-mocha": "^1.0.0"
+    },
+    "scripts": {
+        "build": "ptsc"
     },
     "repository": {
         "type": "git",

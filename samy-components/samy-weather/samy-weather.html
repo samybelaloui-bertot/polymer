@@ -1,0 +1,81 @@
+<style>
+     :host {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .container {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        height: 350px;
+        background: rgb(19, 93, 154);
+        background: radial-gradient(circle, rgba(19, 93, 154, 1) 35%, rgba(40, 103, 171, 1) 68%, rgba(57, 72, 122, 1) 100%);
+        border-radius: 10px;
+        border: 2px solid #39487a;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+    }
+    
+    .main-widget {
+        padding: 10px;
+        flex: auto;
+        color: white;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #city {
+        font-size: 35px;
+    }
+    
+    #description {
+        padding: 10px;
+        font-weight: bold;
+        font-size: 20px;
+    }
+    
+    #temperature {
+        font-size: 100px;
+    }
+    
+    .city-selector {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .city-selector paper-dropdown-menu {
+        cursor: pointer;
+        --paper-input-container-label: {
+            color: white;
+        }
+        --paper-input-container-input: {
+            color: white;
+        }
+    }
+</style>
+<div class="container">
+    <div class="main-widget">
+        <div id="city">{{weather.city}}</div>
+        <div id="description">{{weather.description}}</div>
+        <div id="temperature">{{weather.temp}}&deg;</div>
+    </div>
+    <div class="city-selector">
+        <paper-dropdown-menu label="Choose a city">
+            <paper-listbox slot="dropdown-content" attr-for-selected="city-code" selected="{{selectedCityCode}}">
+                <dom-repeat items="{{cities}}">
+                    <template>
+                  <paper-item city-code="[[item.code]]">[[item.name]]</paper-item>
+                </template>
+                </dom-repeat>
+            </paper-listbox>
+        </paper-dropdown-menu>
+    </div>
+
+</div>

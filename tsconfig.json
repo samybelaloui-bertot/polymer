@@ -1,0 +1,37 @@
+{
+    "compilerOptions": {
+      "target": "es2017",
+      "module": "es6",
+      "moduleResolution": "node",
+      "isolatedModules": false,
+      "declaration": true,
+      "strictNullChecks": true,
+      "noImplicitAny": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "removeComments": false,
+      "preserveConstEnums": true,
+      "suppressImplicitAnyIndexErrors": false,
+      "sourceMap": true,
+      "experimentalDecorators": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "plugins": [
+        {
+          "transform": "polymer-template-injector"
+        }
+      ]
+    },
+    "files": [
+      "node_modules/@types/mocha/index.d.ts",
+      "node_modules/@types/chai/index.d.ts"
+    ],
+    "include": [
+      "./src/**/*.ts",
+      "./samy-components/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules/**/*",
+      "./src/**/*.d.ts"
+    ]
+  }
