@@ -3,6 +3,7 @@ import "@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
 import "@polymer/paper-item/paper-item.js";
 import "@polymer/paper-listbox/paper-listbox.js";
 import "../samy-button/samy-button.js";
+import "../samy-autocomplete/samy-autocomplete.js";
 /**
  * `samy-weather`
  * This is samy !
@@ -18,6 +19,7 @@ export declare class SamyWeather extends PolymerElement {
     weather: Object;
     idCitySelected: Object;
     constructor();
+    connectedCallback(): void;
     static readonly is: string;
     static readonly properties: {
         name: {

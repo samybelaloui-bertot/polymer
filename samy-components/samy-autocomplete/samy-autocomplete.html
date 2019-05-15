@@ -1,0 +1,11 @@
+<style>
+     :host {
+        width: 100%;
+        border: solid red 2px;
+    }
+</style>
+
+<!--<input type="text" value$="{{query::input}}" on-input="_inputChanged" />-->
+<iron-input bind-value="{{query}}">
+    <input on-input="_inputChanged">
+</iron-input>

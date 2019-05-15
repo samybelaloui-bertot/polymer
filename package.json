@@ -1,11 +1,13 @@
 {
     "name": "samy",
     "dependencies": {
+        "@polymer/iron-input": "^3.0.1",
         "@polymer/neon-animation": "^3.0.1",
         "@polymer/paper-dropdown-menu": "^3.0.1",
         "@polymer/paper-item": "^3.0.1",
         "@polymer/paper-listbox": "^3.0.1",
         "@polymer/polymer": "^3.0.0",
+        "@types/dom-inputevent": "^1.0.4",
         "allstars-dev-resources": "^0.1.8",
         "volvo-web-components": "^0.3.3",
         "web-animations-js": "^2.3.1"

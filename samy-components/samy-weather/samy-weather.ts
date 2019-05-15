@@ -3,6 +3,8 @@ import "@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
 import "@polymer/paper-item/paper-item.js";
 import "@polymer/paper-listbox/paper-listbox.js";
 import "../samy-button/samy-button.js";
+import "../samy-autocomplete/samy-autocomplete.js";
+import { SamyAutocomplete } from "../samy-autocomplete/samy-autocomplete.js";
 
 /**
  * `samy-weather`
@@ -25,6 +27,17 @@ export class SamyWeather extends PolymerElement {
     this.selectedCityCode = this.cities[0].code;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    const autocomplete = this.$.cityAutocomplete as SamyAutocomplete;
+    console.log(autocomplete);
+    autocomplete.graphqlQuery = `city(name: "$$qs$$"){
+      id
+      name
+      country
+    }`;
+
+  }
 
   static get is() { return 'samy-weather'; }
 
