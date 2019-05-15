@@ -58,6 +58,7 @@ export declare class SamyWeather extends PolymerElement {
         };
     };
     _increaseTemperature(): void;
+    _getTemperatureOfParis(): Promise<void>;
     _getWeatherOfCity(): Promise<void>;
     _selectCity(event: any): void;
     _selectedCityCodeChanged(newValue: any): void;

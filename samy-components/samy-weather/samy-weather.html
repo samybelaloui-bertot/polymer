@@ -67,6 +67,8 @@
         <div id="temperature">{{weather.temp}}&deg;</div>
     </div>
     <div class="city-selector">
+        <button on-click="_getTemperatureOfParis">Get temperature of Paris</button>
+
         <paper-dropdown-menu label="Choose a city">
             <paper-listbox slot="dropdown-content" attr-for-selected="city-code" selected="{{selectedCityCode}}">
                 <dom-repeat items="{{cities}}">

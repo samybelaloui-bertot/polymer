@@ -67,6 +67,24 @@ export class SamyWeather extends PolymerElement {
         this.temperature++;
         console.log(this.weather);
     }
+    async _getTemperatureOfParis() {
+        const json = await fetch(`http://localhost:4000`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query: `{ 
+            city(name: "Paris") {
+              id
+              name
+              country
+            }
+          }` })
+        })
+            .then(r => r.json());
+        console.log(json);
+    }
     async _getWeatherOfCity() {
         // cityId = "6167865";
         var cityId = this.idCitySelected;
@@ -95,7 +113,7 @@ export class SamyWeather extends PolymerElement {
         this.idCitySelected = newValue;
         this._getWeatherOfCity();
     }
-    static get template() { return html `<style>\r\n     :host {\r\n        width: 100%;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n    }\r\n    \r\n    .container {\r\n        display: flex;\r\n        flex-direction: column;\r\n        width: 300px;\r\n        height: 350px;\r\n        background: rgb(19, 93, 154);\r\n        background: radial-gradient(circle, rgba(19, 93, 154, 1) 35%, rgba(40, 103, 171, 1) 68%, rgba(57, 72, 122, 1) 100%);\r\n        border-radius: 10px;\r\n        border: 2px solid #39487a;\r\n        box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);\r\n    }\r\n    \r\n    .main-widget {\r\n        padding: 10px;\r\n        flex: auto;\r\n        color: white;\r\n        flex-direction: column;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n    }\r\n    \r\n    #city {\r\n        font-size: 35px;\r\n    }\r\n    \r\n    #description {\r\n        padding: 10px;\r\n        font-weight: bold;\r\n        font-size: 20px;\r\n    }\r\n    \r\n    #temperature {\r\n        font-size: 100px;\r\n    }\r\n    \r\n    .city-selector {\r\n        padding: 10px;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n    }\r\n    \r\n    .city-selector paper-dropdown-menu {\r\n        cursor: pointer;\r\n        --paper-input-container-label: {\r\n            color: white;\r\n        }\r\n        --paper-input-container-input: {\r\n            color: white;\r\n        }\r\n    }\r\n</style>\r\n<div class="container">\r\n    <div class="main-widget">\r\n        <div id="city">{{weather.city}}</div>\r\n        <div id="description">{{weather.description}}</div>\r\n        <div id="temperature">{{weather.temp}}&deg;</div>\r\n    </div>\r\n    <div class="city-selector">\r\n        <paper-dropdown-menu label="Choose a city">\r\n            <paper-listbox slot="dropdown-content" attr-for-selected="city-code" selected="{{selectedCityCode}}">\r\n                <dom-repeat items="{{cities}}">\r\n                    <template>\r\n                  <paper-item city-code="[[item.code]]">[[item.name]]</paper-item>\r\n                </template>\r\n                </dom-repeat>\r\n            </paper-listbox>\r\n        </paper-dropdown-menu>\r\n    </div>\r\n\r\n</div>`; }
+    static get template() { return html `<style>\r\n     :host {\r\n        width: 100%;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\r\n    }\r\n    \r\n    .container {\r\n        display: flex;\r\n        flex-direction: column;\r\n        width: 300px;\r\n        height: 350px;\r\n        background: rgb(19, 93, 154);\r\n        background: radial-gradient(circle, rgba(19, 93, 154, 1) 35%, rgba(40, 103, 171, 1) 68%, rgba(57, 72, 122, 1) 100%);\r\n        border-radius: 10px;\r\n        border: 2px solid #39487a;\r\n        box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);\r\n    }\r\n    \r\n    .main-widget {\r\n        padding: 10px;\r\n        flex: auto;\r\n        color: white;\r\n        flex-direction: column;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n    }\r\n    \r\n    #city {\r\n        font-size: 35px;\r\n    }\r\n    \r\n    #description {\r\n        padding: 10px;\r\n        font-weight: bold;\r\n        font-size: 20px;\r\n    }\r\n    \r\n    #temperature {\r\n        font-size: 100px;\r\n    }\r\n    \r\n    .city-selector {\r\n        padding: 10px;\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n    }\r\n    \r\n    .city-selector paper-dropdown-menu {\r\n        cursor: pointer;\r\n        --paper-input-container-label: {\r\n            color: white;\r\n        }\r\n        --paper-input-container-input: {\r\n            color: white;\r\n        }\r\n    }\r\n</style>\r\n<div class="container">\r\n    <div class="main-widget">\r\n        <div id="city">{{weather.city}}</div>\r\n        <div id="description">{{weather.description}}</div>\r\n        <div id="temperature">{{weather.temp}}&deg;</div>\r\n    </div>\r\n    <div class="city-selector">\r\n        <button on-click="_getTemperatureOfParis">Get temperature of Paris</button>\r\n\r\n        <paper-dropdown-menu label="Choose a city">\r\n            <paper-listbox slot="dropdown-content" attr-for-selected="city-code" selected="{{selectedCityCode}}">\r\n                <dom-repeat items="{{cities}}">\r\n                    <template>\r\n                  <paper-item city-code="[[item.code]]">[[item.name]]</paper-item>\r\n                </template>\r\n                </dom-repeat>\r\n            </paper-listbox>\r\n        </paper-dropdown-menu>\r\n    </div>\r\n\r\n</div>`; }
 }
 window.customElements.define(SamyWeather.is, SamyWeather);
 //# sourceMappingURL=samy-weather.js.map

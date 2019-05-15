@@ -79,6 +79,28 @@ export class SamyWeather extends PolymerElement {
     console.log(this.weather);
   }
 
+  
+  async _getTemperatureOfParis() {
+    const json = await fetch(
+      `http://localhost:4000`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({query: `{ 
+            city(name: "Paris") {
+              id
+              name
+              country
+            }
+          }`})
+        })
+        .then(r => r.json());
+      console.log(json)
+  }
+
   async _getWeatherOfCity() {
     // cityId = "6167865";
     var cityId = this.idCitySelected;
