@@ -19,14 +19,8 @@ export declare class SamyAutocomplete extends PolymerElement {
             value: string;
             notify: boolean;
         };
-        graphqlQuery: {
-            type: StringConstructor;
-            value: string;
-            observer: string;
-        };
     };
     _inputChanged(e: InputEvent): void;
-    _graphqlQueryChanged(newValue: string): void;
     _getResultsOfQuery(input: string): Promise<null | undefined>;
     _generateGraphqlQuery(input: string): string | undefined;
 }

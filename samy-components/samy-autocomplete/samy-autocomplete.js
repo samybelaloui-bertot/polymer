@@ -19,11 +19,6 @@ export class SamyAutocomplete extends PolymerElement {
                 value: "",
                 notify: true
             },
-            graphqlQuery: {
-                type: String,
-                value: "",
-                observer: "_graphqlQueryChanged"
-            }
         };
     }
     _inputChanged(e) {
@@ -32,10 +27,12 @@ export class SamyAutocomplete extends PolymerElement {
         console.log('this.query + e.data = ' + (this.query + e.data));
         this._getResultsOfQuery(this.query + e.data);
     }
-    _graphqlQueryChanged(newValue) {
-        console.log("grqphql query changed", newValue);
-        this._getResultsOfQuery(this.query);
+    /*
+    _graphqlQueryChanged(newValue: string) {
+      console.log("grqphql query changed", newValue);
+      this._getResultsOfQuery(this.query);
     }
+    */
     async _getResultsOfQuery(input) {
         if (this.graphqlQuery.indexOf(SamyAutocomplete.INPUT_MATCH) < 0) {
             console.error("You forgot the GraphQL query!!!!");

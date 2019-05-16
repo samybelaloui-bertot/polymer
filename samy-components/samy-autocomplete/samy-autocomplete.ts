@@ -25,11 +25,13 @@ export class SamyAutocomplete extends PolymerElement {
         value: "",
         notify : true
       },
+      /*
       graphqlQuery: {
         type: String,
         value: "",
         observer: "_graphqlQueryChanged"
       }
+      */
     };
   }
 
@@ -41,10 +43,12 @@ export class SamyAutocomplete extends PolymerElement {
     this._getResultsOfQuery(this.query + e.data);
   }
 
+  /*
   _graphqlQueryChanged(newValue: string) {
     console.log("grqphql query changed", newValue);
     this._getResultsOfQuery(this.query);
   }
+  */
 
   async _getResultsOfQuery(input: string) {
     if (this.graphqlQuery.indexOf(SamyAutocomplete.INPUT_MATCH) < 0) {
