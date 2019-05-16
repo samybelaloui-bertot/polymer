@@ -1,4 +1,5 @@
 import { PolymerElement } from "@polymer/polymer/polymer-element.js";
+import '@polymer/iron-list';
 
 /**
  * `samy-autocomplete`
@@ -13,6 +14,7 @@ export class SamyAutocomplete extends PolymerElement {
 
   query: string;
   graphqlQuery: string;
+  autocompleteCities: Array<any>;
 
   static get is() {
     return "samy-autocomplete";
@@ -25,6 +27,10 @@ export class SamyAutocomplete extends PolymerElement {
         value: "",
         notify : true
       },
+      autocompleteCities: {
+        type: Array,
+        value: []
+      }
       /*
       graphqlQuery: {
         type: String,
@@ -72,7 +78,15 @@ export class SamyAutocomplete extends PolymerElement {
       })
     })
       .then(r => r.json())
-      .then(json => console.log(json));
+      .then(json => 
+        {
+          console.log(json);
+          this.autocompleteCities = [];
+          this.autocompleteCities = json.data.city;
+          console.log('this.autocompleteCities = ');
+          console.log(this.autocompleteCities);
+        }
+        );
   }
 
   _generateGraphqlQuery(input: string) {
@@ -89,7 +103,9 @@ export class SamyAutocomplete extends PolymerElement {
         this.graphqlQuery.substr(startSecondPart)
       ].join("");
 
+      console.log("result = ");
       console.log(result);
+     
       return result;
     }
   }

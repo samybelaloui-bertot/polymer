@@ -1,10 +1,15 @@
-import {  PolymerElement } from "@polymer/polymer/polymer-element.js";
+import { PolymerElement } from "@polymer/polymer/polymer-element.js";
 import "@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
 import "@polymer/paper-item/paper-item.js";
 import "@polymer/paper-listbox/paper-listbox.js";
 import "../samy-button/samy-button.js";
 import "../samy-autocomplete/samy-autocomplete.js";
 import { SamyAutocomplete } from "../samy-autocomplete/samy-autocomplete.js";
+import {
+  Handler,
+  Action
+} from "volvo-web-components/volvo-vehicle/volvo-vehicle";
+import { Weather } from "../samy-datatypes/weather.js";
 
 /**
  * `samy-weather`
@@ -18,9 +23,9 @@ export class SamyWeather extends PolymerElement {
   public selectedCityCode: Object;
   public cities: Array<any>;
   public temperature: number;
-  public weather: Object;
-  public idCitySelected : Object;
-
+  public weather: Weather | null;
+  public idCitySelected: Object;
+  public cityHandler: Handler;
 
   constructor() {
     super();
@@ -36,10 +41,17 @@ export class SamyWeather extends PolymerElement {
       name
       country
     }`;
-
   }
 
-  static get is() { return 'samy-weather'; }
+  static get is() {
+    return "samy-weather";
+  }
+
+  static get observers() {
+    return [
+      '_getWeatherOfCity(selectedCityCode, cityHandler)'
+    ]
+  }
 
   static get properties() {
     return {
@@ -83,6 +95,9 @@ export class SamyWeather extends PolymerElement {
       idCitySelected: {
         type: String,
         value: ""
+      },
+      cityHandler: {
+        type: Object
       }
     };
   }
@@ -92,31 +107,40 @@ export class SamyWeather extends PolymerElement {
     console.log(this.weather);
   }
 
-  
   async _getTemperatureOfParis() {
-    const json = await fetch(
-      `http://localhost:4000`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({query: `{ 
+    const json = await fetch(`http://localhost:4000`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        query: `{ 
             city(name: "Paris") {
               id
               name
               country
             }
-          }`})
-        })
-        .then(r => r.json());
-      console.log(json)
+          }`
+      })
+    }).then(r => r.json());
+    console.log(json);
   }
 
   async _getWeatherOfCity() {
     // cityId = "6167865";
     var cityId = this.idCitySelected;
+
+    if (this.cityHandler && this.cityHandler.can(Weather, Action.Get)) {
+      this.cityHandler
+        .perform<typeof Weather, Weather>(Weather, Action.Get, { id: cityId })
+        .then(weather => {
+          console.log(weather);
+          this.weather = weather.data;
+        });
+    }
+
+    /*
     var key = "ab689e369a47daa13acd7c14fce95c5c";
 
     this.weather = await fetch(
@@ -135,9 +159,10 @@ export class SamyWeather extends PolymerElement {
         return weather;
       });
     console.log(this.weather);
+    */
   }
 
-  _selectCity(event : any) {
+  _selectCity(event: any) {
     console.log(event);
 
     // this.idCitySelected = event.model.__data.item['code'];
@@ -145,7 +170,7 @@ export class SamyWeather extends PolymerElement {
     console.log(this.idCitySelected);
   }
 
-  _selectedCityCodeChanged(newValue : any) {
+  _selectedCityCodeChanged(newValue: any) {
     this.idCitySelected = newValue;
     this._getWeatherOfCity();
   }

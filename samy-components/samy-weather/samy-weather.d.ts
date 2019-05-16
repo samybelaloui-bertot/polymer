@@ -4,6 +4,8 @@ import "@polymer/paper-item/paper-item.js";
 import "@polymer/paper-listbox/paper-listbox.js";
 import "../samy-button/samy-button.js";
 import "../samy-autocomplete/samy-autocomplete.js";
+import { Handler } from "volvo-web-components/volvo-vehicle/volvo-vehicle";
+import { Weather } from "../samy-datatypes/weather.js";
 /**
  * `samy-weather`
  * This is samy !
@@ -16,11 +18,13 @@ export declare class SamyWeather extends PolymerElement {
     selectedCityCode: Object;
     cities: Array<any>;
     temperature: number;
-    weather: Object;
+    weather: Weather | null;
     idCitySelected: Object;
+    cityHandler: Handler;
     constructor();
     connectedCallback(): void;
     static readonly is: string;
+    static readonly observers: string[];
     static readonly properties: {
         name: {
             type: StringConstructor;
@@ -57,6 +61,9 @@ export declare class SamyWeather extends PolymerElement {
         idCitySelected: {
             type: StringConstructor;
             value: string;
+        };
+        cityHandler: {
+            type: ObjectConstructor;
         };
     };
     _increaseTemperature(): void;

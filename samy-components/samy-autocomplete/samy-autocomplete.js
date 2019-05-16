@@ -1,5 +1,6 @@
 import { html as html } from "@polymer/polymer";
 import { PolymerElement } from "@polymer/polymer/polymer-element.js";
+import '@polymer/iron-list';
 /**
  * `samy-autocomplete`
  * A samy autocomplete !
@@ -19,6 +20,17 @@ export class SamyAutocomplete extends PolymerElement {
                 value: "",
                 notify: true
             },
+            autocompleteCities: {
+                type: Array,
+                value: []
+            }
+            /*
+            graphqlQuery: {
+              type: String,
+              value: "",
+              observer: "_graphqlQueryChanged"
+            }
+            */
         };
     }
     _inputChanged(e) {
@@ -52,7 +64,13 @@ export class SamyAutocomplete extends PolymerElement {
             })
         })
             .then(r => r.json())
-            .then(json => console.log(json));
+            .then(json => {
+            console.log(json);
+            this.autocompleteCities = [];
+            this.autocompleteCities = json.data.city;
+            console.log('this.autocompleteCities = ');
+            console.log(this.autocompleteCities);
+        });
     }
     _generateGraphqlQuery(input) {
         if (this.graphqlQuery !== "") {
@@ -63,11 +81,12 @@ export class SamyAutocomplete extends PolymerElement {
                 input,
                 this.graphqlQuery.substr(startSecondPart)
             ].join("");
+            console.log("result = ");
             console.log(result);
             return result;
         }
     }
-    static get template() { return html `<style>\r\n     :host {\r\n        width: 100%;\r\n        border: solid red 2px;\r\n    }\r\n</style>\r\n\r\n<!--<input type="text" value$="{{query::input}}" on-input="_inputChanged" />-->\r\n<iron-input bind-value="{{query}}">\r\n    <input on-input="_inputChanged">\r\n</iron-input>`; }
+    static get template() { return html `<style>\r\n     :host {\r\n        width: 100%;\r\n    }\r\n    \r\n    .list-item {\r\n        background-color: rgb(235, 235, 235);\r\n        opacity: 0.8;\r\n        border: solid black 1px;\r\n    }\r\n</style>\r\n\r\n<iron-input bind-value="{{query}}">\r\n    <input on-input="_inputChanged">\r\n</iron-input>\r\n\r\n<iron-list items="[[autocompleteCities]]">\r\n    <template>\r\n        <div class="list-item">\r\n            [[item.name]], [[item.country]]\r\n        </div>\r\n    </template>\r\n</iron-list>`; }
 }
 SamyAutocomplete.INPUT_MATCH = "$$qs$$";
 window.customElements.define(SamyAutocomplete.is, SamyAutocomplete);

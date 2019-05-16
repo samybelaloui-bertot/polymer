@@ -1,11 +1,23 @@
 <style>
      :host {
         width: 100%;
-        border: solid red 2px;
+    }
+    
+    .list-item {
+        background-color: rgb(235, 235, 235);
+        opacity: 0.8;
+        border: solid black 1px;
     }
 </style>
 
-<!--<input type="text" value$="{{query::input}}" on-input="_inputChanged" />-->
 <iron-input bind-value="{{query}}">
     <input on-input="_inputChanged">
 </iron-input>
+
+<iron-list items="[[autocompleteCities]]">
+    <template>
+        <div class="list-item">
+            [[item.name]], [[item.country]]
+        </div>
+    </template>
+</iron-list>

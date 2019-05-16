@@ -4,16 +4,16 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
     
     .container {
         display: flex;
         flex-direction: column;
         width: 300px;
-        height: 350px;
+        height: 390px;
         background: rgb(19, 93, 154);
-        background: radial-gradient(circle, rgba(19, 93, 154, 1) 35%, rgba(40, 103, 171, 1) 68%, rgba(57, 72, 122, 1) 100%);
+        background: radial-gradient( circle, rgba(19, 93, 154, 1) 35%, rgba(40, 103, 171, 1) 68%, rgba(57, 72, 122, 1) 100%);
         border-radius: 10px;
         border: 2px solid #39487a;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
@@ -21,7 +21,7 @@
     
     .main-widget {
         padding: 10px;
-        flex: auto;
+        /*flex: auto;*/
         color: white;
         flex-direction: column;
         display: flex;
@@ -50,6 +50,13 @@
         justify-content: center;
     }
     
+    .city-search {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    
     .city-selector paper-dropdown-menu {
         cursor: pointer;
         --paper-input-container-label: {
@@ -62,23 +69,25 @@
 </style>
 <div class="container">
     <div class="main-widget">
-        <div id="city">{{weather.city}}</div>
-        <div id="description">{{weather.description}}</div>
-        <div id="temperature">{{weather.temp}}&deg;</div>
+        <div id="city">{{ weather.city }}</div>
+        <div id="description">{{ weather.description }}</div>
+        <div id="temperature">{{ weather.temp }}&deg;</div>
     </div>
     <div class="city-selector">
-        <!--<button on-click="_getTemperatureOfParis">Get temperature of Paris</button>-->
-        <samy-autocomplete id="cityAutocomplete"></samy-autocomplete>
-
         <paper-dropdown-menu label="Choose a city">
-            <paper-listbox slot="dropdown-content" attr-for-selected="city-code" selected="{{selectedCityCode}}">
-                <dom-repeat items="{{cities}}">
+            <paper-listbox slot="dropdown-content" attr-for-selected="city-code" selected="{{ selectedCityCode }}">
+                <dom-repeat items="{{ cities }}">
                     <template>
-                  <paper-item city-code="[[item.code]]">[[item.name]]</paper-item>
-                </template>
+            <paper-item city-code="[[item.code]]">[[item.name]]</paper-item>
+          </template>
                 </dom-repeat>
             </paper-listbox>
         </paper-dropdown-menu>
+
     </div>
 
+    <div class="city-search">
+        <!--<button on-click="_getTemperatureOfParis">Get temperature of Paris</button>-->
+        <samy-autocomplete id="cityAutocomplete"></samy-autocomplete>
+    </div>
 </div>

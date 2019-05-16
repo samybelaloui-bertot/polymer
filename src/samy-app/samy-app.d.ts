@@ -10,6 +10,7 @@ import "volvo-web-components/volvo-list/volvo-list-item";
  */
 export declare class SamyApp extends PolymerElement {
     static readonly is: string;
+    ready(): void;
     static readonly properties: {
         prop1: {
             type: StringConstructor;
